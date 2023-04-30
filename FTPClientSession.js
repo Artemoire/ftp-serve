@@ -1,28 +1,22 @@
-/**
- * @param {import("net").Socket} socket 
- * @param {Buffer} buffer 
- */
-const asyncSocketWrite = (socket, buffer) => {
-  return new Promise((resolve, reject) => {
-    socket.write(buffer, (err) => {
-      if (err) reject(err);
-      else resolve();
-    })
-  })
-}
+const { MockFSClient } = require("./MockFSClient");
+const { ServerDTP } = require("./ServerDTP");
+const { asyncSocketWrite } = require("./sock");
 
 class FTPClientSession {
 
   /**
    * @param {import("net").Socket} socket 
    */
-  constructor(socket) {
+  constructor(socket, passiveModeConfig) {
     this.socket = socket; // TODO: ControlConnection ?
     this.user = '';
     this.authenticated = false;
+    this.dtp = new ServerDTP(passiveModeConfig);
+    this.fsClient = new MockFSClient();
   }
 
   async status(code, message) {
+    console.log(`<${code} ${message}`);
     await asyncSocketWrite(this.socket, Buffer.from(`${code} ${message}\r\n`));
   }
 

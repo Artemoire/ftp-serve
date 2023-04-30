@@ -5,7 +5,7 @@ const { executeIfAuthenticated } = require("../FTPCommand");
  * @param {string} parameter 
  */
 const pwdAction = async (session, parameter) => {
-  await session.status('257', '"/" is the current directory');
+  await session.status('257', `"${session.fsClient.workDir}" is the current directory`);
 }
 
 module.exports = executeIfAuthenticated(pwdAction);
