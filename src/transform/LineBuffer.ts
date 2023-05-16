@@ -1,17 +1,17 @@
-const { Transform } = require('stream');
+import { Transform, TransformCallback } from "stream";
 
-class LineBuffer extends Transform {
+export class LineBuffer extends Transform {
+
+  private buffer: string = '';
 
   constructor() {
     super({ readableObjectMode: true })
-    this.buffer = '';
   }
 
   _pushLines() {
     while (true) {
       const index = this.buffer.indexOf('\n');
       if (index === -1) {
-        // no complete line found, wait for more data
         break;
       }
 
@@ -23,16 +23,14 @@ class LineBuffer extends Transform {
     }
   }
 
-  _transform(chunk, encoding, callback) {
+  _transform(chunk: any, encoding: BufferEncoding, callback: TransformCallback) {
     this.buffer += chunk.toString('ascii');
     this._pushLines();
     callback();
   }
 
-  _flush(callback) {
+  _flush(callback: TransformCallback) {
     this._pushLines();
     callback();
   }
 }
-
-module.exports = { LineBuffer };
