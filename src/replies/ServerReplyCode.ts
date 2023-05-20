@@ -3,6 +3,7 @@ export enum ServerReplyCode {
   Greeting = 220,
   SystemType = 215,
   Proceed = 230,
+  DirectoryOk = 257,
   RequirePassword = 331,
   NonImplemented = 502,
   SyntaxError = 501,
