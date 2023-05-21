@@ -16,6 +16,7 @@ FTP server framework for Node.js
 - Investigate how to confirm successful replies and how to close data connections in compliance with relevant specifications
 - FTP/TLS, FTP/SSH
 - Documentation, pipelining support, telnet non-compliance etc.
+- Learn how the server reply "120 Service ready in nnn minutes." works
 # References
 - http://cr.yp.to/ftp.html
 - https://stackoverflow.com/questions/42025253/does-ftp-support-utf-character-set
