@@ -1,41 +1,38 @@
 import { ActiveConnector, Connector } from "./Connectors";
+import { DTPState } from "./DTPState";
 import { PortAllocator } from "./PortAllocator";
-
-const isLocalHost = (addr: string) => addr === "::1";
-const formatLocalHost = (addr: string) => isLocalHost(addr) ? '127.0.0.1' : addr;
-const isIpV4Prefixed = (addr: string) => addr.startsWith("::ffff:");
-const removeIpV4Prefix = (addr: string) => isIpV4Prefixed(addr) ? addr.substring("::ffff:".length) : addr;
 
 export class DTP {
 
-  public binary = false;
-  public readonly defaultRemoteAddress: string; // TODO: is equal to value of ControlConnection.remoteAddress, but does not express dependency
-  public readonly localAddress: string;
-  private bindAddress: string;
-  private bindPort: number;
-  private mode: 'passive' | 'active' = 'active';
-  private passiveModePortAllocator: PortAllocator = PortAllocator.range(49152, 65534);
-  private connector: Connector = new ActiveConnector();
+  public readonly state: DTPState;
 
   constructor(
     localAddress: string,
     remoteAddress: string | undefined,
   ) {
-    if (!remoteAddress) throw new Error("undefined remote address");
-    this.localAddress = removeIpV4Prefix(formatLocalHost(localAddress));
-    this.defaultRemoteAddress = removeIpV4Prefix(formatLocalHost(localAddress));
-    this.bindAddress = this.defaultRemoteAddress;
-    this.bindPort = 21;
+    if (!remoteAddress) throw new Error("undefined remote address"); // this is because net.Socket.remoteAddress is not always defined. TODO: consider where to handle this decision
+    this.state = new DTPState(localAddress, remoteAddress);
   }
 
-  setPassiveMode() {
-    this.mode = 'passive';
-    this.bindAddress = this.localAddress;
-    this.bindPort = this.passiveModePortAllocator.allocate();
+  // async init() {
+  //   this.storage = await storageProvider();
+  // }
+
+  async cwd(path: string) {
+    // const info = await this.storage.info(path);
+    // if (info === FileNotFound) return FileNotFound;
+    // if (info.isDirectory) return InvalidPath;
+    // this.state.setWorkDir(path);
+    // return Success;
   }
 
-  setActiveMode() {
-    throw new Error("Method not implemented.");
+  async list(): Promise<boolean> {
+    const sock = await this.state.connect();
+    if (!sock) return false; // return ConnectionFailed
+    // const files = await this.storage.list();
+    // const list = this.listResultFormatter.format(files);
+    // sock.write(list)
+    // sock(end)
+    return true;
   }
-
 }
