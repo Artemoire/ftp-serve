@@ -7,11 +7,11 @@ registration.register(CommandMnemonic.TYPE, async (session, parameter) => {
 
   const upperCaseType = parameter.toUpperCase();
   if (upperCaseType === 'A' || upperCaseType === 'A N') {
-    session.dtp.binary = false;
+    session.dtp.state.setBinaryFlag(false);
     return session.reply(DefaultReplies.SwitchToAscii);
   }
   if (upperCaseType === 'I' || upperCaseType === 'L 8') {
-    session.dtp.binary = true;
+    session.dtp.state.setBinaryFlag(true);
     return session.reply(DefaultReplies.SwitchToBinary);
   }
 
