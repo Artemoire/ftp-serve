@@ -5,7 +5,6 @@ import { DTP } from "./DTP";
 import { DefaultReplies } from "./replies/DefaultReplies";
 import { ServerReply } from "./replies/ServerReply";
 import { User } from "./state/User";
-import { WorkDir } from "./state/WorkDir";
 import { StorageClient } from "./storage/StorageClient";
 import { CommandParser } from "./transform/CommandParser";
 import { LineBuffer } from "./transform/LineBuffer";
@@ -15,7 +14,6 @@ export class FTPSession {
   public readonly user: User = new User();
   public readonly dtp = new DTP(this.socket.localAddress, this.socket.remoteAddress);
   public readonly storageClient: StorageClient | undefined;
-  public readonly workDir: WorkDir = new WorkDir();
 
   constructor(
     private socket: Socket
