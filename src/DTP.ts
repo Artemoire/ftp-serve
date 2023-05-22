@@ -27,7 +27,6 @@ export class DTP {
 
   async cwd(path: string) {
     const info = await this.storage.info(path);
-    console.log('RETRIEVED ISDIR: ' + info?.isDirectory);
 
     if (!info) return false;
     if (!info.isDirectory) return false;
