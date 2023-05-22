@@ -27,7 +27,7 @@ export class FTPSession {
     return this.reply(DefaultReplies.Greeting);
   }
 
-  listen(): void {
+  listen(): void { // TODO: execution engine should take care of its configuration ?
     const lineBuffer = new LineBuffer();
     const commandParser = new CommandParser();
     const execution = new CommandExecution(this);

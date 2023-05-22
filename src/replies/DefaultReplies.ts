@@ -16,4 +16,7 @@ export class DefaultReplies {
   static UsernameAlreadySet = new MessageReply(ServerReplyCode.AccountError, "Username is already set");
   static RequirePassword = new MessageReply(ServerReplyCode.RequirePassword, "User name okay, need password.");
   static SyntaxMissingUsername = new MessageReply(ServerReplyCode.SyntaxError, "Must provide username");
+  // list
+  static DirectorySent = new MessageReply(ServerReplyCode.ClosingDataConnection, "Directory send OK.");
+  static CantOpenDataConnection = new MessageReply(ServerReplyCode.DataConnectionFail, "Can't open data connection.");
 }
