@@ -25,7 +25,10 @@ export class PassiveConnector implements Connector {
     this.server = createServer();
     this.server.listen(this.port, this.host);
     this.dataConnectionPromise = new Promise((resolve, reject) => {
-      this.server.once('connection', resolve);
+      this.server.once('connection', (socket) => {
+        console.log(`[DEBUG] Passive mode connection from ${socket.remoteAddress}:${socket.remotePort}`);
+        resolve(socket);
+      });
       setTimeout(reject, 5000); // TODO: timeout config
     });
 
@@ -61,7 +64,6 @@ export class ActiveConnector implements Connector {
 
   async connect(): Promise<Socket | undefined> {
     return undefined;
-    // throw new Error("Method not implemented.");
   }
 
 }
