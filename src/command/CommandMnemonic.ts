@@ -1,7 +1,8 @@
 export enum CommandMnemonic {
   NONIMPLEMENTED = "????",
+  CWD = "CWD",
   LIST = "LIST",
-  // RETR = "RETR",
+  NOOP = "NOOP",
   PASV = "PASV",
   PWD = "PWD",
   SYST = "SYST",

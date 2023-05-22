@@ -6,6 +6,7 @@ import { MockStorageClient } from "./storage/MockStorageClient";
 import { StorageClient } from "./storage/StorageClient";
 import { serializeFileList } from "./storage/serializeFileList";
 
+// TODO: try-catch storage client operations
 export class DTP {
 
   public readonly state: DTPState;
@@ -25,9 +26,16 @@ export class DTP {
   // }
 
   async cwd(path: string) {
-    // const info = await this.storage.info(path);
+    const info = await this.storage.info(path);
+    console.log('RETRIEVED ISDIR: ' + info?.isDirectory);
+
+    if (!info) return false;
+    if (!info.isDirectory) return false;
     // if (info === FileNotFound) return FileNotFound;
     // if (info.isDirectory) return InvalidPath;
+
+    this.state.setWorkDir(path);
+    return true;
     // this.state.setWorkDir(path);
     // return Success;
   }
