@@ -1,9 +1,7 @@
-import { DefaultReplies } from "../../replies/DefaultReplies";
+import { FTPSession } from "../../FTPSession";
 import { MessageReply } from "../../replies/ServerReply";
-import { CommandMnemonic } from "../CommandMnemonic";
-import { registration } from "../commandRegistration";
 import { ServerReplyCode } from "../../replies/ServerReplyCode";
 
-registration.register(CommandMnemonic.PWD, async (session, parameter) => {
+export const pwdHandler = async (session: FTPSession, parameter: string | undefined) => {
   return session.reply(new MessageReply(ServerReplyCode.DirectoryOk, `"${session.dtp.state.getWorkDir()}" is the current directory`));
-});
+};

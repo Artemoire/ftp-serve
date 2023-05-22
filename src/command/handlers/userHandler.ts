@@ -1,8 +1,7 @@
+import { FTPSession } from "../../FTPSession";
 import { DefaultReplies } from "../../replies/DefaultReplies";
-import { CommandMnemonic } from "../CommandMnemonic";
-import { registration } from "../commandRegistration";
 
-registration.register(CommandMnemonic.USER, async (session, parameter) => {
+export const userHandler = async (session: FTPSession, parameter: string | undefined) => {
   if (session.user.hasSetName()) return session.reply(DefaultReplies.UsernameAlreadySet);
   if (!parameter) return session.reply(DefaultReplies.SyntaxMissingUsername);
   session.user.name = parameter;
@@ -14,5 +13,4 @@ registration.register(CommandMnemonic.USER, async (session, parameter) => {
   }
 
   return session.reply(DefaultReplies.RequirePassword);
-
-});
+};

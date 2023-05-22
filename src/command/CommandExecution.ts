@@ -1,10 +1,6 @@
-import "./actions";
 import { FTPSession } from "../FTPSession";
 import { CommandInput } from "./CommandInput";
-import { registration } from "./commandRegistration";
-import { CommandRegistry } from "./CommandRegistry";
-
-const registry = registration.build() as CommandRegistry;
+import { commandHandlerRegistry } from "./commandHandlerRegistry";
 
 export class CommandExecution {
 
@@ -13,7 +9,7 @@ export class CommandExecution {
   ) { }
 
   async execute(input: CommandInput) {
-    return registry[input[0]](this.session, input[1]);
+    return commandHandlerRegistry[input[0]](this.session, input[1]);
   }
 
 }

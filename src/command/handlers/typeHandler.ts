@@ -1,8 +1,7 @@
+import { FTPSession } from "../../FTPSession";
 import { DefaultReplies } from "../../replies/DefaultReplies";
-import { CommandMnemonic } from "../CommandMnemonic";
-import { registration } from "../commandRegistration";
 
-registration.register(CommandMnemonic.TYPE, async (session, parameter) => {
+export const typeHandler = async (session: FTPSession, parameter: string | undefined) => {
   if (!parameter) return session.reply(DefaultReplies.SyntaxMissingParameter);
 
   const upperCaseType = parameter.toUpperCase();
@@ -16,4 +15,4 @@ registration.register(CommandMnemonic.TYPE, async (session, parameter) => {
   }
 
   return session.reply(DefaultReplies.SyntaxInvalidParameter);
-});
+};
