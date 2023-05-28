@@ -3,6 +3,7 @@ import { ServerReplyCode } from "./ServerReplyCode";
 
 export class DefaultReplies {
   static Greeting = new MessageReply(ServerReplyCode.Greeting, "Service ready for new user.");
+  static Okay = new MessageReply(ServerReplyCode.Success, "Okay.");
   static CommandNotImplemented = new MessageReply(ServerReplyCode.NonImplemented, "Command not implemented.");
   static SyntaxMissingParameter = new MessageReply(ServerReplyCode.SyntaxError, "Must provide parameter");
   static SyntaxInvalidParameter = new MessageReply(ServerReplyCode.SyntaxError, "Invalid parameter"); // TODO: value ?

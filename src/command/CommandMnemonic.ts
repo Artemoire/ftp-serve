@@ -4,6 +4,7 @@ export enum CommandMnemonic {
   LIST = "LIST",
   NOOP = "NOOP",
   PASV = "PASV",
+  PORT = "PORT",
   PWD = "PWD",
   QUIT = "QUIT",
   SYST = "SYST",

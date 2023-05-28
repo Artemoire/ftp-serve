@@ -1,4 +1,4 @@
-import { Socket, Server, createServer } from "net";
+import { Socket, Server, createServer, createConnection } from "net";
 import { PortAllocator } from "./PortAllocator";
 import { Timer } from "./Timer";
 
@@ -62,8 +62,19 @@ export class ActiveConnector implements Connector {
     public readonly port: number = 20,
   ) { }
 
+  private _connectOrTimeout(): Promise<Socket> {
+    return new Promise((resolve, reject) => {
+      const socket: Socket = createConnection(this.port, this.host, () => resolve(socket));
+      setTimeout(reject, 5000); // TODO: config timeout
+    })
+  }
+
   async connect(): Promise<Socket | undefined> {
-    return undefined;
+    try {
+      return await this._connectOrTimeout();
+    } catch (error) {
+
+    }
   }
 
 }
