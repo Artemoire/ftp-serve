@@ -14,6 +14,8 @@ export class DefaultReplies {
   static CantOpenDataConnection = new MessageReply(ServerReplyCode.DataConnectionFail, "Can't open data connection.");
   // noop
   static NoOpReply = new MessageReply(ServerReplyCode.Success, "Doing nothing...");
+  // quit
+  static UserQuit = new MessageReply(ServerReplyCode.ClosingControlConnection, "Service closing control connection.");
   // syst
   static SystemType = new MessageReply(ServerReplyCode.SystemType, "UNIX Type: L8")
   // type

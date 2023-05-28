@@ -2,6 +2,7 @@ export enum ServerReplyCode {
   Success = 200,
   Greeting = 220,
   SystemType = 215,
+  ClosingControlConnection = 221,
   ClosingDataConnection = 226,
   PassiveModeOk = 227,
   Proceed = 230,

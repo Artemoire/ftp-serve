@@ -7,6 +7,7 @@ import { listHandler } from "./handlers/listHandler";
 import { noOpHandler } from "./handlers/noopHandler";
 import { pasvHandler } from "./handlers/pasvHandler";
 import { pwdHandler } from "./handlers/pwdHandler";
+import { quitHandler } from "./handlers/quitHandler";
 import { systHandler } from "./handlers/systHandler";
 import { typeHandler } from "./handlers/typeHandler";
 import { userHandler } from "./handlers/userHandler";
@@ -18,6 +19,7 @@ export type CommandHandlerRegistry = {
 export const commandHandlerRegistry: CommandHandlerRegistry = {
   [CommandMnemonic.NONIMPLEMENTED]: commandNotImplementedHandler,
   [CommandMnemonic.CWD]: cwdHandler,
+  [CommandMnemonic.QUIT]: quitHandler,
   [CommandMnemonic.LIST]: listHandler,
   [CommandMnemonic.NOOP]: noOpHandler,
   [CommandMnemonic.PASV]: pasvHandler,

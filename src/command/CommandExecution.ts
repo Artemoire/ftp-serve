@@ -9,6 +9,7 @@ export class CommandExecution {
   ) { }
 
   async execute(input: CommandInput) {
+    if (this.session.ended) return console.log("[WARNING] Session ended, flushing command:", input[0]); // TODO: log session id
     return commandHandlerRegistry[input[0]](this.session, input[1]);
   }
 
