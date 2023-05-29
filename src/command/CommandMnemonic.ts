@@ -2,6 +2,7 @@ export enum CommandMnemonic {
   NONIMPLEMENTED = "????",
   CWD = "CWD",
   LIST = "LIST",
+  MKD = "MKD",
   NOOP = "NOOP",
   PASV = "PASV",
   PORT = "PORT",

@@ -4,6 +4,7 @@ import { CommandMnemonic } from "./CommandMnemonic";
 import { commandNotImplementedHandler } from "./handlers/commandNotImplementedHandler";
 import { cwdHandler } from "./handlers/cwdHandler";
 import { listHandler } from "./handlers/listHandler";
+import { mkdHandler } from "./handlers/mkdHandler";
 import { noOpHandler } from "./handlers/noopHandler";
 import { pasvHandler } from "./handlers/pasvHandler";
 import { portHandler } from "./handlers/portHandler";
@@ -22,6 +23,7 @@ export const commandHandlerRegistry: CommandHandlerRegistry = {
   [CommandMnemonic.CWD]: cwdHandler,
   [CommandMnemonic.QUIT]: quitHandler,
   [CommandMnemonic.LIST]: listHandler,
+  [CommandMnemonic.MKD]: mkdHandler,
   [CommandMnemonic.NOOP]: noOpHandler,
   [CommandMnemonic.PASV]: pasvHandler,
   [CommandMnemonic.PORT]: portHandler,

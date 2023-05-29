@@ -39,6 +39,10 @@ export class DTP {
     // return Success;
   }
 
+  async mkdir(path: string): Promise<boolean> {
+    return this.storage.mkdir(this.state.getWorkDir() + "/" + path);
+  }
+
   async list(): Promise<boolean> {
     const sock = await this.state.connect();
     if (!sock) return false; // return ConnectionFailed

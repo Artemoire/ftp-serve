@@ -7,6 +7,7 @@ export enum ServerReplyCode {
   PassiveModeOk = 227,
   Proceed = 230,
   FileOk = 250,
+  FileUnavailable = 550,
   DirectoryOk = 257,
   RequirePassword = 331,
   DataConnectionFail = 425,
