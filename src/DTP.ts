@@ -1,6 +1,8 @@
 import { ActiveConnector, Connector } from "./Connectors";
 import { DTPState } from "./DTPState";
 import { PortAllocator } from "./PortAllocator";
+import { Success } from "./Result";
+import { InvalidPath, PathAlreadyExists } from "./StorageResults";
 import { asyncSocketEnd, asyncSocketWrite } from "./sockUtils";
 import { MockStorageClient } from "./storage/MockStorageClient";
 import { StorageClient } from "./storage/StorageClient";
@@ -39,7 +41,7 @@ export class DTP {
     // return Success;
   }
 
-  async mkdir(path: string): Promise<boolean> {
+  async mkdir(path: string): Promise<Success | InvalidPath | PathAlreadyExists> { // TODO: try-catch -> Failure
     return this.storage.mkdir(this.state.getWorkDir() + "/" + path);
   }
 

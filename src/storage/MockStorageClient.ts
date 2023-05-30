@@ -1,3 +1,5 @@
+import { Success } from "../Result";
+import { InvalidPath, PathAlreadyExists } from "../StorageResults";
 import { FileDescriptor } from "./FileDescriptor";
 import { StorageClient } from "./StorageClient";
 
@@ -67,26 +69,32 @@ export class MockStorageClient extends StorageClient {
     }
   }
 
-  async mkdir(path: string): Promise<boolean> {
+  async mkdir(path: string): Promise<Success | InvalidPath | PathAlreadyExists> {
     path = path.trim();
     if (path === "/") return false;
     const subpaths = path.split("/");
     let dir: VFile | undefined = MOCK_VFS;
     const modified = +new Date();
+    let created = 0;
     for (const subpath of subpaths) {
-      if (!dir.directory) return false; // return InvalidPath
-      if (!dir.directory[subpath]) dir.directory[subpath] = cDirM(subpath, modified);
+      if (!dir.directory) return InvalidPath.Result;
+      if (!dir.directory[subpath]) {
+        dir.directory[subpath] = cDirM(subpath, modified);
+        created++;
+      }
       dir = dir.directory[subpath];
     }
-    return true;
+
+    if (created === 0) return PathAlreadyExists.Result;
+    return Success.Result;
   }
 
   list(path: string): FileDescriptor[] | Promise<FileDescriptor[]> {
     const selected = selectVFS(MOCK_VFS, path);
-    console.log(`[DEBUG] listing ${JSON.stringify(selected)}`);
 
     if (!selected) return [];
     if (!selected.directory) return [];
+
     return Object.values(selected.directory).map(vfile => ({
       isDirectory: !!vfile.directory,
       modified: vfile.modified,
