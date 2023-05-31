@@ -8,6 +8,7 @@ export enum CommandMnemonic {
   PORT = "PORT",
   PWD = "PWD",
   QUIT = "QUIT",
+  RETR = "RETR",
   SYST = "SYST",
   TYPE = "TYPE",
   USER = "USER",

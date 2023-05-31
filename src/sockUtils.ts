@@ -10,3 +10,7 @@ export function asyncSocketWrite(socket: Socket, buffer: string | Uint8Array): P
 export function asyncSocketEnd(socket: Socket): Promise<void> {
   return new Promise((resolve, reject) => socket.end(resolve));
 }
+
+export function awaitEnd(socket: Socket): Promise<void> {
+  return new Promise((resolve) => socket.once('end', resolve));
+}

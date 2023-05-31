@@ -1,3 +1,4 @@
+import { Duplex, Readable } from "node:stream";
 import { Success } from "../Result";
 import { InvalidPath, PathAlreadyExists } from "../StorageResults";
 import { FileDescriptor } from "./FileDescriptor";
@@ -67,6 +68,15 @@ export class MockStorageClient extends StorageClient {
       path,
       size: selected.size
     }
+  }
+
+  async read(path: string): Promise<Readable | InvalidPath> {
+    const selected = selectVFS(MOCK_VFS, path);
+    if (!selected || !selected.data) return InvalidPath.Result;
+    const duplex = new Duplex();
+    duplex.push(selected.data);
+    duplex.push(null);
+    return duplex;
   }
 
   async mkdir(path: string): Promise<Success | InvalidPath | PathAlreadyExists> {

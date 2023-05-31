@@ -1,12 +1,15 @@
+import { posix } from "node:path";
 import { ActiveConnector, Connector } from "./Connectors";
 import { DTPState } from "./DTPState";
 import { PortAllocator } from "./PortAllocator";
 import { Success } from "./Result";
 import { InvalidPath, PathAlreadyExists } from "./StorageResults";
-import { asyncSocketEnd, asyncSocketWrite } from "./sockUtils";
+import { asyncSocketEnd, asyncSocketWrite, awaitEnd } from "./sockUtils";
 import { MockStorageClient } from "./storage/MockStorageClient";
 import { StorageClient } from "./storage/StorageClient";
 import { serializeFileList } from "./storage/serializeFileList";
+import { ConnectionFailed } from "./NetworkResults";
+import { Readable } from "node:stream";
 
 // TODO: try-catch storage client operations
 export class DTP {
@@ -39,6 +42,23 @@ export class DTP {
     return true;
     // this.state.setWorkDir(path);
     // return Success;
+  }
+
+  async read(path: string): Promise<Success | ConnectionFailed | InvalidPath> {
+    const sock = await this.state.connect();
+    if (!sock) return ConnectionFailed.Result;
+
+    const readResult = await this.storage.read(posix.join(this.state.getWorkDir(), path));
+    if (readResult.constructor === InvalidPath) {
+      await asyncSocketEnd(sock);
+      return readResult;
+    }
+
+    // TODO: handle read errors, progress saving ?
+    (readResult as Readable).pipe(sock);
+    await awaitEnd(sock);
+
+    return Success.Result;
   }
 
   async mkdir(path: string): Promise<Success | InvalidPath | PathAlreadyExists> { // TODO: try-catch -> Failure

@@ -1,4 +1,5 @@
 export enum ServerReplyCode {
+  FileMark = 150,
   Success = 200,
   Greeting = 220,
   SystemType = 215,
